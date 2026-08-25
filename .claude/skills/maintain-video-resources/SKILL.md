@@ -1,14 +1,17 @@
 ---
 name: maintain-video-resources
-description: Maintain the n8n DevRel video-resources repo — the layout, naming, per-video folders, and the root README index. Use whenever adding resources for a new YouTube video (workflow JSON, prompts, notes), editing an existing video's folder, renaming/reorganizing anything under videos/, or updating the index. Triggers on "add a video", "new video resources", "add this workflow/prompt to the repo", "update the index/README".
+description: Maintain the n8n DevRel video-resources repo: the layout, naming, per-video folders, and the root README index. Use whenever adding resources for a new YouTube video (workflow JSON, prompts, notes), editing an existing video's folder, renaming or reorganizing anything under videos/, or updating the index. Triggers on "add a video", "new video resources", "add this workflow/prompt to the repo", "update the index/README".
 ---
 
 # Maintaining video-resources
 
-This repo is the public companion to the n8n DevRel team's YouTube videos. Instead of pasting
-workflows and prompts into video descriptions, videos link here with short links — every click is
-a trackable enablement signal. That purpose drives every rule below: the repo is read by viewers
-who just arrived from a video and have ~5 seconds of patience.
+This repo is the public companion to the n8n DevRel team's YouTube videos. Rather than pasting
+workflows and prompts into a video description, the videos link here with short links, so every
+click is a trackable enablement signal.
+
+That shapes the rules below. Someone reading this repo just clicked a link in a video and wants the
+thing they saw on screen, so the index has to be the first thing they see and the resources have to
+be one click from it.
 
 ## Required layout
 
@@ -24,50 +27,55 @@ video-resources/
     └── 2026-07-29-webhook-basics/
 ```
 
-All per-video content lives under `videos/`. Nothing else goes at repo root — root stays
-`README.md` + `videos/` (plus tooling dotfiles) so that GitHub renders the index immediately in
-the viewport when someone lands on the repo. Never add a top-level folder for a single video's
-assets, and never create category folders (`workflows/`, `prompts/`) that split one video's
-resources across the tree.
+All per-video content lives under `videos/`. Root stays as `README.md` plus `videos/` and any
+tooling dotfiles, so GitHub renders the index in the viewport as soon as someone lands. Don't add a
+top-level folder for one video's assets, and don't create category folders like `workflows/` or
+`prompts/` that scatter a single video's resources across the tree.
 
 ## Folder naming
 
 `videos/YYYY-MM-DD-short-slug/`
 
-- Date is the video's **publish date** (or the intended one). Ask if it isn't known and no date is
-  implied; if the user says to proceed without it, use today's date and note in the PR/summary
-  that the folder should be renamed once the video is scheduled.
-- Slug: lowercase, hyphenated, 2–5 words, recognizable from the video title. Not the full title.
-- Never renumber or reorder folders — the date prefix already sorts them.
+- The date is the video's publish date, or the intended one. Ask if you don't know it and nothing
+  in the request implies it. If told to go ahead without it, use today's date and say in the summary
+  that the folder needs renaming once the video is scheduled.
+- The slug is lowercase and hyphenated, two to five words, recognizable from the video title. Not
+  the full title.
+- Never renumber or reorder folders. The date prefix sorts them.
 
 ## Files inside a video folder
 
-Include only what the video actually produced. An empty placeholder file is worse than a missing
-one.
+Only include what the video actually produced. An empty placeholder file costs the reader more than
+a missing one.
 
 | File | When |
 | --- | --- |
-| `README.md` | Whenever the resources need any framing at all — what the video builds, what to set up before importing, gotchas. Skip only for a folder holding a single self-explanatory file. |
-| `workflow.json` | The exported n8n workflow. Multiple workflows → descriptive names (`workflow-ingest.json`, `workflow-agent.json`). |
-| `prompts.md` | Prompts used in the video, verbatim. |
-| anything else | Sample data, `.env.example`, screenshots — only if the video used it. |
+| `README.md` | Whenever the resources need framing: what the video builds, what to set up before importing, what to watch out for. Skip it only for a folder holding one self-explanatory file. |
+| `workflow.json` | The exported n8n workflow. For several workflows, use descriptive names like `workflow-ingest.json` and `workflow-agent.json`. |
+| `prompts.md` | The prompts used in the video, verbatim. |
+| anything else | Sample data, `.env.example`, screenshots, but only if the video used it. |
 
-Keep prompts **verbatim**. They are the thing viewers came to copy; do not tidy wording, reformat
-headings, or "improve" them. Reproduce the original text and structure exactly, and put any of your
-own commentary in the video `README.md` instead.
+Keep prompts verbatim. They're what people came to copy, so don't tidy the wording, reformat the
+headings or improve the phrasing. Reproduce the original text and structure, and put any commentary
+of your own in the video `README.md`.
+
+## Writing the README prose
+
+Follow the `human-writing` skill for every README in this repo. These pages are read by people who
+just watched a video, and copy that reads as machine-written undercuts the channel.
 
 ## Credentials
 
-Exported n8n workflows carry credential references. Before committing a `workflow.json`, check it
-for anything sensitive — API keys, tokens, webhook URLs with secrets, real email addresses,
-internal URLs, Drive/Sheet IDs pointing at private assets. Strip or placeholder them and say what
-was stripped. Credential *names* (e.g. `"name": "Google Drive account"`) are fine; credential
-*values* never are.
+An exported n8n workflow carries credential references. Before committing a `workflow.json`, read
+it for anything sensitive: API keys, tokens, webhook URLs with secrets in them, real email
+addresses, internal URLs, Drive or Sheet IDs pointing at private assets. Strip or placeholder them
+and say what you stripped. Credential names like `"name": "Google Drive account"` are fine to keep.
+Credential values never are.
 
 ## The index (root `README.md`)
 
-Every PR that adds a video folder also edits the root `README.md` in the same PR. The index is a
-table, **newest at top**:
+Every PR that adds a video folder edits the root `README.md` in the same PR. The index is a table,
+newest at the top:
 
 ```markdown
 | Date | Video | Resources |
@@ -75,22 +83,20 @@ table, **newest at top**:
 | 2026-08-24 | [n8n Control Thesis](https://youtu.be/…) | [workflow + prompts](videos/2026-08-24-n8n-control-thesis/) |
 ```
 
-- Link the video to its YouTube URL. If the URL isn't known yet, add the row with the title in
-  plain text and flag that the link needs filling in — do not invent or guess a URL, and do not
-  fabricate a short link.
-- Link resources to the folder path (relative link), not to individual files.
-- Keep the intro above the table to a couple of lines: what this repo is and that it's linked from
-  the videos.
+- Link the video to its YouTube URL. If you don't have the URL yet, add the row with the title as
+  plain text and flag that it needs filling in. Don't guess a URL and don't invent a short link.
+- Link the resources to the folder, not to individual files inside it.
+- Keep the intro above the table to a couple of lines: what the repo is and that the videos link to
+  it.
 
-## Working checklist
-
-When adding a video, do all of these:
+## Checklist for adding a video
 
 1. Create `videos/YYYY-MM-DD-slug/`.
-2. Add the resource files, prompts verbatim, workflows scrubbed of secrets.
+2. Add the resource files. Prompts verbatim, workflows scrubbed.
 3. Write the folder `README.md` if the resources need framing.
-4. Add a row at the **top** of the index table in root `README.md`.
-5. Report anything left as a placeholder (missing date, missing YouTube URL, missing short link).
+4. Add a row at the top of the index table in the root `README.md`.
+5. Report anything left as a placeholder: a missing date, a missing YouTube URL, a missing short
+   link.
 
-Missing information is never a reason to guess. Ship everything that's known, mark the gap
-explicitly, and say what you need to fill it.
+If something's missing, say so and say what you need. Guessing a URL or a date puts a wrong link in
+front of everyone who clicks through from the video.
