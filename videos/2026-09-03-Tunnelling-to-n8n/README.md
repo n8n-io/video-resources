@@ -58,8 +58,8 @@ If you get a 503 bad gateway when loading the public hostname.
    ```bash
    docker compose up
    ```
-
-4. Open your domain in the browser to reach n8n. The request inspector is at http://localhost:4040.
+4. If you want to use your existing volumes, make sure to uncomment the lines in the [docker-compse.yaml](docker-compose.yaml)
+5. Open your domain in the browser to reach n8n. The request inspector is at http://localhost:4040.
 
 ## The key setting
 

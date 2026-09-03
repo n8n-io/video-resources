@@ -20,5 +20,6 @@ services:
 
 volumes:
   n8n_data:
-    external: true
-    name: n8n_data
+    # Uncomment the next two liines to use your existing n8n data volume
+    # external: true
+    # name: n8n_data
