@@ -16,7 +16,7 @@ services:
     env_file: .env
     command: http --url=${NGROK_DOMAIN} n8n:5678
     ports:
-      - "4040:4040"   # ngrok inspector
+      - "127.0.0.1:4040:4040"   # ngrok inspector
 
 volumes:
   n8n_data:
