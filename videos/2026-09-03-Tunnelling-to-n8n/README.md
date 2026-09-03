@@ -9,8 +9,8 @@ Companion resources for the "Tunnelling to n8n" video. Use these to give your lo
 
 ## Resources
 
-- `.env.example` — environment variables for n8n and ngrok. Copy to `.env` and fill in.
-- `docker-compose.yaml` — runs n8n and the ngrok agent together.
+- [`.env.example`](.env.example) — environment variables for n8n and ngrok. Copy to `.env` and fill in.
+- [`docker-compose.yaml`](docker-compose.yaml) — runs n8n and the ngrok agent together.
 
 ## Prerequisites
 
@@ -52,7 +52,7 @@ If you get a 503 bad gateway when loading the public hostname.
 ## Option B: ngrok (Docker Compose)
 
 1. In the ngrok dashboard, copy your authtoken and reserve a free dev domain, for example `your-name.ngrok-free.dev`.
-2. Copy `.env.example` to `.env` and set `NGROK_AUTHTOKEN`, `NGROK_DOMAIN`, and `N8N_WEBHOOK_URL` & time zone to your reserved domain.
+2. Copy `.env.example` to `.env`, then set `NGROK_AUTHTOKEN` to your token, `NGROK_DOMAIN` to the reserved domain, and `N8N_WEBHOOK_URL` to its `https://` URL. Leave `GENERIC_TIMEZONE` and `TZ` as configured or set them to your local timezone. 
 3. Start it:
 
    ```bash
