@@ -5,8 +5,9 @@ instead of pasting everything into the description. Newest at the top.
 
 | Date | Video | Resources |
 | --- | --- | --- |
-| 2026-08-25 | [Thumbnail Designer Workflow Built with n8n Assistant](https://youtu.be/grWtJae41Vs) | [prompt + setup](videos/2026-08-25-thumbnail-designer-n8n-assistant/) |
+| 2026-09-22 | [How to make a telegram agent](https://youtu.be/AbqPOLfLsm8) | [agent + setup prompt](videos/2026-09-22-telegram-personal-agent/) |
 | 2026-09-03 | [Tunnelling to n8n](https://youtu.be/O9dpO81dEQ0) | [Configuration](videos/2026-09-03-Tunnelling-to-n8n/) |
+| 2026-08-25 | [Thumbnail Designer Workflow Built with n8n Assistant](https://youtu.be/grWtJae41Vs) | [prompt + setup](videos/2026-08-25-thumbnail-designer-n8n-assistant/) |
 
 
 Every folder in [`videos/`](videos/) is named `YYYY-MM-DD-short-slug` and holds what that video
