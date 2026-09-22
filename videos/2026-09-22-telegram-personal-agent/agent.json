@@ -1,0 +1,256 @@
+{
+  "name": "YOUR AGENT NAME HERE",
+  "model": "openrouter/anthropic/claude-sonnet-5",
+  "instructions": "You're a personal assistant to ADD WHO THE AGENT WORKS FOR HERE.\n\nADD AGENT PERSONALITY AND TONE HERE. For example: how it should speak, how formal to be, what writing habits to avoid.\n\nADD ANY FORMATTING RULES HERE. For example: how lists, links and messages should be laid out in the channel you connect (bold, bullets, emojis, hyperlinks).\n\nADD ANY STANDING CONTEXT THE AGENT ALWAYS NEEDS HERE. For example: timezone, working hours, recurring people or projects it will hear about, things it should never do without asking.\n",
+  "credential": "YOUR_MODEL_CREDENTIAL_ID",
+  "tools": [
+    {
+      "type": "node",
+      "name": "Search Emails",
+      "node": {
+        "nodeType": "n8n-nodes-base.gmailTool",
+        "nodeTypeVersion": 2.2,
+        "nodeParameters": {
+          "descriptionType": "auto",
+          "authentication": "oAuth2",
+          "resource": "message",
+          "operation": "getAll",
+          "returnAll": false,
+          "limit": 50,
+          "simple": true,
+          "filters": {
+            "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search', `this is the search syntax from gmail`, 'string') }}"
+          }
+        },
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "YOUR_GMAIL_CREDENTIAL_ID",
+            "name": "Gmail account"
+          }
+        }
+      }
+    },
+    {
+      "type": "node",
+      "name": "Get email by ID",
+      "node": {
+        "nodeType": "n8n-nodes-base.gmailTool",
+        "nodeTypeVersion": 2.2,
+        "nodeParameters": {
+          "descriptionType": "auto",
+          "authentication": "oAuth2",
+          "resource": "message",
+          "operation": "get",
+          "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}",
+          "simple": false,
+          "simplifyMemoryNotice": "",
+          "options": {}
+        },
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "YOUR_GMAIL_CREDENTIAL_ID",
+            "name": "Gmail account"
+          }
+        }
+      }
+    },
+    {
+      "type": "node",
+      "name": "Create Email Reply Draft",
+      "node": {
+        "nodeType": "n8n-nodes-base.gmailTool",
+        "nodeTypeVersion": 2.2,
+        "nodeParameters": {
+          "descriptionType": "auto",
+          "authentication": "oAuth2",
+          "resource": "draft",
+          "operation": "create",
+          "sendTo": "",
+          "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+          "emailType": "html",
+          "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', `html email message`, 'string') }}",
+          "options": {
+            "threadId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Thread_ID', `The thread the draft will be sent in`, 'string') }}"
+          },
+          "parameters": {
+            "authentication": "oAuth2"
+          }
+        },
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "YOUR_GMAIL_CREDENTIAL_ID",
+            "name": "Gmail account"
+          }
+        }
+      }
+    },
+    {
+      "type": "node",
+      "name": "Log Expense",
+      "node": {
+        "nodeType": "n8n-nodes-base.googleSheetsTool",
+        "nodeTypeVersion": 4.7,
+        "nodeParameters": {
+          "descriptionType": "manual",
+          "authentication": "oAuth2",
+          "resource": "sheet",
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "YOUR_SPREADSHEET_ID",
+            "mode": "list",
+            "cachedResultName": "YOUR SPREADSHEET NAME HERE",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": "gid=0",
+            "mode": "list",
+            "cachedResultName": "Sheet1",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit#gid=0"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Name', ``, 'string') }}",
+              "Card": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Card', ``, 'string') }}",
+              "Amount": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Amount', ``, 'string') }}",
+              "date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('date', ``, 'string') }}",
+              "category": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('category', ``, 'string') }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "Name",
+                "displayName": "Name",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Card",
+                "displayName": "Card",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Amount",
+                "displayName": "Amount",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "date",
+                "displayName": "date",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "category",
+                "displayName": "category",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {},
+          "toolDescription": "DESCRIBE WHEN THE AGENT SHOULD CALL THIS TOOL HERE. Example: call this tool when the user wants an expense or a receipt or spending logged. Valid categories are ADD YOUR CATEGORIES HERE."
+        },
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+            "name": "Google Sheets account"
+          }
+        }
+      }
+    }
+  ],
+  "skills": [
+    {
+      "type": "skill",
+      "id": "ADD_YOUR_FIRST_SKILL_ID_HERE"
+    },
+    {
+      "type": "skill",
+      "id": "ADD_YOUR_SECOND_SKILL_ID_HERE"
+    },
+    {
+      "type": "skill",
+      "id": "ADD_YOUR_THIRD_SKILL_ID_HERE"
+    }
+  ],
+  "personalisation": {
+    "icon": "bot",
+    "gradient": {
+      "from": "#00B7AB",
+      "to": "#EA6DB2",
+      "angle": 163,
+      "fromStop": 16,
+      "toStop": 98
+    }
+  },
+  "memory": {
+    "enabled": true,
+    "storage": "n8n"
+  },
+  "config": {
+    "reasoning": "medium",
+    "webSearch": {
+      "enabled": false
+    },
+    "toolCallConcurrency": 10
+  },
+  "providerTools": {},
+  "subAgents": {},
+  "mcpServers": [
+    {
+      "name": "ADD-YOUR-MCP-SERVER-NAME-HERE",
+      "url": "https://ADD.YOUR.MCP.SERVER.URL/mcp",
+      "transport": "streamableHttp",
+      "authentication": "mcpOAuth2Api",
+      "credential": "YOUR_MCP_CREDENTIAL_ID",
+      "connectionTimeoutMs": 60000
+    }
+  ],
+  "tasks": [
+    {
+      "type": "task",
+      "id": "ADD_YOUR_SCHEDULED_TASK_ID_HERE",
+      "enabled": true
+    }
+  ],
+  "integrations": [
+    {
+      "type": "telegram",
+      "credentialId": "YOUR_TELEGRAM_CREDENTIAL_ID",
+      "settings": {
+        "accessMode": "private",
+        "allowedUsers": [
+          "YOUR_TELEGRAM_USER_ID"
+        ],
+        "sessionIdleTimeoutMinutes": null
+      }
+    }
+  ]
+}
